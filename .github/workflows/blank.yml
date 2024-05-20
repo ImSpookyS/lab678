@@ -30,14 +30,14 @@ jobs:
 
     - name: Build exe files
       run: |
-        pyinstaller --onefile components.py
-        pyinstaller --onefile pars.py
-        pyinstaller --onefile json_składnia.py
-        pyinstaller --onefile json_zgodność.py
-        pyinstaller --onefile yaml_weryfikacja.py
-        pyinstaller --onefile yaml_zgodność.py
-        pyinstaller --onefile xml_weryfikacja.py
-        pyinstaller --onefile xml_zgodność.py
+        pyinstaller --onefile lab678/components.py
+        pyinstaller --onefile lab678/pars.py
+        pyinstaller --onefile lab678/json_składnia.py
+        pyinstaller --onefile lab678/json_zgodność.py
+        pyinstaller --onefile lab678/yaml_weryfikacja.py
+        pyinstaller --onefile lab678/yaml_zgodność.py
+        pyinstaller --onefile lab678/xml_weryfikacja.py
+        pyinstaller --onefile lab678/xml_zgodność.py
 
     - name: Upload exe files
       uses: actions/upload-artifact@v3
