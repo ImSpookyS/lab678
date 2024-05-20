@@ -30,7 +30,7 @@ jobs:
 
     - name: Build exe files
       run: |
-        pyinstaller --onefile Task1/components.py
+        pyinstaller --onefile components.py
         pyinstaller --onefile /lab678/pars.py
         pyinstaller --onefile /lab678/json_składnia.py
         pyinstaller --onefile /lab678/json_zgodność.py
