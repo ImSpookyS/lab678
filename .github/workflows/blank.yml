@@ -21,7 +21,8 @@ jobs:
       with:
         python-version: 3.x
 
-    - name: Install resources
+    - name: Run installResources.ps1
+      shell: powershell
       run: .\installResources.ps1
 
     - name: Install dependencies
@@ -29,6 +30,7 @@ jobs:
 
     - name: Build exe files
       run: |
+        pyinstaller --onefile components.py
         pyinstaller --onefile pars.py
         pyinstaller --onefile json_składnia.py
         pyinstaller --onefile json_zgodność.py
@@ -42,6 +44,7 @@ jobs:
       with:
         name: exe-files
         path: |
+          components/dist/components.exe
           pars/dist/pars.exe
           json_składnia/dist/json_składnia.exe
           json_zgodność/dist/json_zgodność.exe
