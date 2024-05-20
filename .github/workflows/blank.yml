@@ -2,15 +2,15 @@ name: Build and Upload Exe
 
 on:
   schedule:
-    - cron: "0 0 * * 0"  # Uruchamianie automatyczne raz w tygodniu
+    - cron: "0 0 * * 0"
   push:
     branches:
       - master
-  workflow_dispatch:  # Uruchamianie ręczne przez użytkownika
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: windows-latest  # Domyślny serwer Windows
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
@@ -22,7 +22,7 @@ jobs:
         python-version: 3.x
 
     - name: Install resources
-      run: .\installResources.ps1  # Uruchomienie skryptu instalacyjnego PowerShell
+      run: .\installResources.ps1
 
     - name: Install dependencies
       run: pip install pyinstaller
