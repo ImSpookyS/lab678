@@ -1,16 +1,16 @@
-name: Build Exe
+name: Build and Upload Exe
 
 on:
+  schedule:
+    - cron: "0 0 * * 0"  # Uruchamianie automatyczne raz w tygodniu
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - master
+  workflow_dispatch:  # Uruchamianie ręczne przez użytkownika
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest  # Domyślny serwer Windows
 
     steps:
     - name: Checkout repository
@@ -21,46 +21,31 @@ jobs:
       with:
         python-version: 3.x
 
+    - name: Install resources
+      run: .\installResources.ps1  # Uruchomienie skryptu instalacyjnego PowerShell
+
     - name: Install dependencies
       run: pip install pyinstaller
 
-    - name: Build exe for pars.py
-      run: pyinstaller --onefile pars.py
-      working-directory: ${{ github.workspace }}
-
-    - name: Build exe for json_składnia.py
-      run: pyinstaller --onefile json_składnia.py
-      working-directory: ${{ github.workspace }}
-
-    - name: Build exe for json_zgodność.py
-      run: pyinstaller --onefile json_zgodność.py
-      working-directory: ${{ github.workspace }}
-
-    - name: Build exe for yaml_weryfikacja.py
-      run: pyinstaller --onefile yaml_weryfikacja.py
-      working-directory: ${{ github.workspace }}
-
-    - name: Build exe for yaml_zgodność.py
-      run: pyinstaller --onefile yaml_zgodność.py
-      working-directory: ${{ github.workspace }}
-
-    - name: Build exe for xml_weryfikacja.py
-      run: pyinstaller --onefile xml_weryfikacja.py
-      working-directory: ${{ github.workspace }}
-
-    - name: Build exe for xml_zgodność.py
-      run: pyinstaller --onefile xml_zgodność.py
-      working-directory: ${{ github.workspace }}
+    - name: Build exe files
+      run: |
+        pyinstaller --onefile pars.py
+        pyinstaller --onefile json_składnia.py
+        pyinstaller --onefile json_zgodność.py
+        pyinstaller --onefile yaml_weryfikacja.py
+        pyinstaller --onefile yaml_zgodność.py
+        pyinstaller --onefile xml_weryfikacja.py
+        pyinstaller --onefile xml_zgodność.py
 
     - name: Upload exe files
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: exe-files
         path: |
-          pars/dist/
-          json_składnia/dist/
-          json_zgodność/dist/
-          yaml_weryfikacja/dist/
-          yaml_zgodność/dist/
-          xml_weryfikacja/dist/
-          xml_zgodność/dist/
+          pars/dist/pars.exe
+          json_składnia/dist/json_składnia.exe
+          json_zgodność/dist/json_zgodność.exe
+          yaml_weryfikacja/dist/yaml_weryfikacja.exe
+          yaml_zgodność/dist/yaml_zgodność.exe
+          xml_weryfikacja/dist/xml_weryfikacja.exe
+          xml_zgodność/dist/xml_zgodność.exe
